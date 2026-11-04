@@ -1,0 +1,11 @@
+/* Lines added to a config, marked with { .added hl_lines="..." } */
+.added .hll {
+  background-color: rgba(46, 160, 67, 0.25);
+  box-shadow: inset 3px 0 0 #2ea043;
+}
+.added-legend {
+  background-color: rgba(46, 160, 67, 0.25);
+  border-left: 3px solid #2ea043;
+  padding: 0 0.3em;
+  font-weight: 600;
+}

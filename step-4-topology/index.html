@@ -1,0 +1,818 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Step-by-step lab guide for moving Catalyst SD-WAN devices from device templates to configuration groups">
+      
+      
+      
+        <link rel="canonical" href="https://tzarski0.github.io/sdwan-ux2-migration-lab/step-4-topology/">
+      
+      
+      
+        <link rel="prev" href="../step-3-ux1-policy/">
+      
+      
+        <link rel="next" href="../step-5-dc/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>Step 4: UX 2.0 Topology - SD-WAN UX 1.0 to UX 2.0 Migration Lab</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  <!-- Keep the lab guide out of search engine results -->
+  <meta name="robots" content="noindex, nofollow">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="SD-WAN UX 1.0 to UX 2.0 Migration Lab" class="md-header__button md-logo" aria-label="SD-WAN UX 1.0 to UX 2.0 Migration Lab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigation</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SD-WAN UX 1.0 to UX 2.0 Migration Lab
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Step 4: UX 2.0 Topology
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Search</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="SD-WAN UX 1.0 to UX 2.0 Migration Lab" class="md-nav__button md-logo" aria-label="SD-WAN UX 1.0 to UX 2.0 Migration Lab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    SD-WAN UX 1.0 to UX 2.0 Migration Lab
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview & Lab Access
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-0-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 0: Configuration Conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-1-verify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 1: Verify Network State
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-2-hierarchy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 2: Site Hierarchy
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-3-ux1-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 3: Update UX 1.0 Policy
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 4: UX 2.0 Topology
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 4: UX 2.0 Topology
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ux-10-policy-vs-ux-20-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        UX 1.0 policy vs UX 2.0 topology
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tasks
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-5-dc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 5: Migrate DC
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-6-branches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 6: Migrate Branches (Optional)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step-7-cleanup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Step 7: Cleanup (Optional)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ux-10-policy-vs-ux-20-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        UX 1.0 policy vs UX 2.0 topology
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tasks
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+
+<h1 id="step-4-define-the-ux-20-topology-policy">Step 4: Define the UX 2.0 Topology Policy<a class="headerlink" href="#step-4-define-the-ux-20-topology-policy" title="Permanent link">&para;</a></h1>
+<p>In this step you build the <strong>same hub-and-spoke policy as in UX 1.0</strong>, this time as a UX 2.0 <strong>topology policy</strong>. The logic doesn't change: branches only learn TLOCs and routes from the DC, and everything else is rejected. What changes is <strong>which sites it applies to</strong>: the new branch site IDs (<code>121</code>-<code>123</code>) instead of the old ones (<code>20-99</code>).</p>
+<h2 id="ux-10-policy-vs-ux-20-topology">UX 1.0 policy vs UX 2.0 topology<a class="headerlink" href="#ux-10-policy-vs-ux-20-topology" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>UX 1.0 <code>branches-hub-and-spoke</code></th>
+<th>UX 2.0 <code>branches-hub-and-spoke-v2</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where it's configured</td>
+<td>Centralized policy (Classic)</td>
+<td>Configuration → Topology</td>
+</tr>
+<tr>
+<td>Applies to (who)</td>
+<td><code>apply-policy site-list branches</code> (site IDs <code>20-99</code>)</td>
+<td><strong>Outbound sites:</strong> hierarchy group <code>branches</code> (Bergen <code>121</code>, Tromso <code>122</code>, Trondheim <code>123</code>)</td>
+</tr>
+<tr>
+<td>Accepts (what)</td>
+<td><code>match site-list dc</code> (<code>10</code>) and, after Step 3, <code>ux2-dc</code> (<code>110</code>)</td>
+<td><strong>Match sites:</strong> <code>SITE_10</code> (<code>10</code>) and <code>dc</code> (<code>110</code>)</td>
+</tr>
+<tr>
+<td>Default action</td>
+<td>Reject</td>
+<td>Reject</td>
+</tr>
+</tbody>
+</table>
+<p>The two policies cover <strong>different branches</strong> and never overlap:</p>
+<ul>
+<li>A branch that is still on UX 1.0 (site ID <code>21</code>-<code>23</code>) is in site list <code>branches</code>, so it gets the UX 1.0 policy.</li>
+<li>A branch that has been migrated (site ID <code>121</code>-<code>123</code>) is in hierarchy group <code>branches</code>, so it gets the UX 2.0 topology policy.</li>
+</ul>
+<p>Moving a branch from one policy to the other only takes a change of its site ID, which happens when it is deployed with the configuration group in Step 6.</p>
+<div class="admonition question">
+<p class="admonition-title">Why do the two policies use different site IDs?</p>
+<ul>
+<li><strong>A site can't be covered by both policies at the same time.</strong> If the UX 1.0 policy and the UX 2.0 topology both applied to the same site ID, the Controllers would have two conflicting policies for that site.</li>
+<li><strong>The UX 1.0 policy can't simply be deactivated first.</strong> That would leave the network without any hub-and-spoke policy until the UX 2.0 topology is activated, so branches would learn routes from each other during that gap.</li>
+</ul>
+<p>Giving migrated sites new site IDs avoids both problems. Each site is covered by exactly one policy at all times, and sites move to UX 2.0 one at a time.</p>
+</div>
+<pre class="mermaid"><code>%%{init: {"flowchart": {"wrappingWidth": 400}}}%%
+flowchart LR
+    DC["DC&lt;br/&gt;site ID 10 (UX 1.0) or 110 (UX 2.0)"]
+    C(["Controllers"])
+    P1["UX 1.0 policy&lt;br/&gt;accept: dc, ux2-dc"]
+    P2["UX 2.0 topology&lt;br/&gt;accept: SITE_10, dc"]
+    B1["Branches on UX 1.0&lt;br/&gt;site IDs 21-23"]
+    B2["Branches on UX 2.0&lt;br/&gt;site IDs 121-123"]
+    DC -- "TLOCs and routes" --&gt; C
+    C --&gt; P1 -- "only DC" --&gt; B1
+    C --&gt; P2 -- "only DC" --&gt; B2</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Why match both DC sites?</p>
+<p>Like the updated UX 1.0 policy, the topology accepts the DC at both its old site ID (<code>SITE_10</code>) and its new one (<code>dc</code>, <code>110</code>). That way it works no matter whether the DC routers have already been migrated or not, and it stays correct if the DC has to be rolled back.</p>
+</div>
+<h2 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Go to <strong>Configuration → Topology</strong> and click <strong>Create Topology</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/create-topology.png"><img alt="Create Topology" src="../images/create-topology.png" width="480" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Enter a topology name and click <strong>Create</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/13.png"><img alt="Create topology" src="../images/13.png" width="480" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Under <strong>Add Topology</strong>, select <strong>Custom</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/14.png"><img alt="Custom topology" src="../images/14.png" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Enter the name <code>branches-hub-and-spoke-v2</code>. Under <strong>Outbound Sites</strong>, click <strong>Add Sites</strong>, select group <strong>branches</strong> and click <strong>Save</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/15.png"><img alt="Outbound sites" src="../images/15.png" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Click <strong>Add Rules</strong>. In the first rule, change <strong>Type</strong> to <strong>TLOC</strong>, match sites <code>dc</code> and <code>SITE_10</code>, and set the action to <strong>Accept</strong>. Click <strong>Save Match and Actions</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/16.png"><img alt="Rule 1, TLOC" src="../images/16.png" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Click <strong>Add Rules</strong> again. In this rule, set <strong>Type</strong> to <strong>Route</strong>, match sites <code>dc</code> and <code>SITE_10</code>, and set the action to <strong>Accept</strong>. Click <strong>Save Match and Actions</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/17.png"><img alt="Rule 2, Route" src="../images/17.png" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Confirm the policy looks like the screenshot below, then click <strong>Save</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/19.png"><img alt="Completed topology policy" src="../images/19.png" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Click <strong>Close</strong> in the bottom right corner. Then click <strong>…</strong> next to the policy name and select <strong>Activate</strong>.</p>
+<p><a class="glightbox" data-type="image" href="../images/20.png"><img alt="Activate topology" src="../images/20.png" /></a></p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Preview the CLI to see the differences. Click <strong>Deploy</strong>, then <strong>View Deployment Status</strong>, and wait until the policy update succeeds.</p>
+<p><a class="glightbox" data-type="image" href="../images/28.png"><img alt="Deployment status" src="../images/28.png" /></a></p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">No effect yet</p>
+<p>No routers are at sites Bergen, Tromso or Trondheim yet, so this policy has no effect on traffic until the branches are migrated in Step 6.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../step-3-ux1-policy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 3: Update UX 1.0 Policy">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Step 3: Update UX 1.0 Policy
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../step-5-dc/" class="md-footer__link md-footer__link--next" aria-label="Next: Step 5: Migrate DC">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Step 5: Migrate DC
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["content.code.copy","content.tooltips","navigation.footer","navigation.instant","navigation.tracking","navigation.top","search.highlight","toc.follow"],"redirect":null,"search":"../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+    
+  </body>
+</html>
